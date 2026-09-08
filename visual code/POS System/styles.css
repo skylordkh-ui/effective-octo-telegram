@@ -1,0 +1,336 @@
+/* --- Ultra-Premium UI Overhaul --- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* High-end minimalist palette */
+    --bg-app: #F1F4F9;         /* Cool off-white */
+    --bg-panel: #FFFFFF;       /* Pure white */
+    --bg-card: #FFFFFF;
+    --bg-cart-item: #F8FAFC;   /* Very subtle gray for cart items */
+    
+    --text-primary: #0F172A;   /* Near black */
+    --text-secondary: #64748B; /* Slate */
+    
+    --accent-dark: #000000;    /* Pure black for primary actions */
+    --accent-dark-hover: #1E293B;
+    
+    --border-subtle: rgba(15, 23, 42, 0.06);
+    
+    /* Premium Shadows */
+    --shadow-card: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+    --shadow-card-hover: 0 12px 30px -8px rgba(15, 23, 42, 0.12);
+    --shadow-panel: -10px 0 40px rgba(0, 0, 0, 0.03);
+    --shadow-floating: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Switched to Plus Jakarta Sans for that modern Fintech/SaaS look */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Invisible sleek scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* --- 1. Master Layout --- */
+.pos-container {
+    display: grid;
+    grid-template-columns: 1fr 400px; /* Fixed elegant width for cart */
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- 2. Left Column: Dashboard --- */
+.product-section {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 3rem;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+}
+
+/* Redesigned Filters */
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-panel);
+    padding: 0.35rem;
+    border-radius: 100px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.filter-btn {
+    padding: 0.6rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 100px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--text-primary);
+    color: var(--bg-panel);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Product Grid with stagger animation */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    overflow-y: auto;
+    padding-bottom: 2rem;
+    padding-right: 0.5rem;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.product-card {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 14px;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring physics */
+    display: flex;
+    flex-direction: column;
+    animation: slideUpFade 0.4s ease forwards;
+}
+
+.product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    background: var(--bg-app);
+}
+
+.product-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+    padding: 0 4px;
+}
+
+/* Price styled as a modern badge */
+.product-card .price {
+    background: var(--bg-app);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    align-self: flex-start;
+    margin-top: auto;
+    margin-left: 4px;
+}
+
+/* --- 3. Right Column: Cart / Checkout --- */
+.cart-section {
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-panel);
+    position: relative;
+    z-index: 10;
+}
+
+.cart-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Replaced standard borders with gap-separated modules */
+}
+
+.empty-cart-msg {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    font-size: 1rem;
+    opacity: 0.6;
+}
+
+/* Modular Cart Items */
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-cart-item);
+    padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-subtle);
+    animation: slideUpFade 0.3s ease forwards;
+}
+
+.item-name {
+    font-weight: 700;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.item-price {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Beautiful Qty Toggles */
+.item-controls {
+    display: flex;
+    align-items: center;
+    background: var(--bg-panel);
+    border-radius: 100px;
+    padding: 0.25rem;
+    border: 1px solid var(--border-subtle);
+}
+
+.qty-btn {
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.qty-btn:hover {
+    background: var(--bg-app);
+}
+
+.item-controls span {
+    width: 32px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.item-line-total {
+    font-weight: 800;
+    font-size: 1.05rem;
+    text-align: right;
+    min-width: 60px;
+}
+
+/* Floating Totals Dock */
+.cart-totals {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 28px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-floating);
+    margin-top: auto;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.grand-total {
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* High-impact Checkout Button */
+.checkout-btn {
+    width: 100%;
+    padding: 1.2rem;
+    margin-top: 1.2rem;
+    background: var(--accent-dark);
+    color: var(--bg-panel);
+    border: none;
+    border-radius: 100px; /* Fully rounded pill */
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkout-btn:hover:not(:disabled) {
+    background: var(--accent-dark-hover);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.checkout-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+.checkout-btn:disabled {
+    background: var(--bg-app);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    box-shadow: none;
+}

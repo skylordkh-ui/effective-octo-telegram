@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern POS MVP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="pos-container">
+        <!-- Left Column: Products -->
+        <main class="product-section">
+            <header class="header">
+                <h1>POS Dashboard</h1>
+                <div class="filters" id="category-filters">
+                    <!-- Filter buttons will be populated by JS -->
+                </div>
+            </header>
+            
+            <div class="product-grid" id="product-grid">
+                <!-- Product cards will be dynamically injected here -->
+            </div>
+        </main>
+
+        <!-- Right Column: Cart / Order Summary -->
+        <aside class="cart-section">
+            <h2>Order Summary</h2>
+            
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be dynamically injected here -->
+                <div class="empty-cart-msg">Cart is empty</div>
+            </div>
+
+            <div class="cart-totals">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax (10%)</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total</span>
+                    <span id="total">$0.00</span>
+                </div>
+                
+                <button class="checkout-btn" id="checkout-btn" disabled>Checkout / Pay</button>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
